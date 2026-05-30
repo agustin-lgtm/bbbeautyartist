@@ -389,6 +389,170 @@ footer a:hover{color:var(--gold-soft)}
   </div>
 </section>
 
+<!-- ═══ SHOWCASE SCROLL-DRIVEN · 4 categorías firma ═══ -->
+<style>
+.showcase{padding:130px 0;background:var(--paper);position:relative;overflow:hidden}
+.showcase::before{content:"";position:absolute;top:-150px;right:-100px;width:480px;height:480px;background:radial-gradient(circle,rgba(232,196,188,.32) 0%,transparent 60%);pointer-events:none}
+.showcase .container{position:relative;z-index:1}
+.showcase-head{max-width:780px;margin-bottom:80px;text-align:center;margin:0 auto 80px}
+.showcase-head h2{font-family:'Cormorant Garamond';font-weight:400;font-size:clamp(38px,4.8vw,62px);line-height:1.04;letter-spacing:-.022em;margin:16px 0 22px;color:var(--ink)}
+.showcase-head h2 em{font-style:italic;color:var(--gold);font-weight:500}
+.showcase-head p{font-size:17.5px;color:var(--ink-soft);max-width:600px;line-height:1.75;margin:0 auto}
+.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start}
+.showcase-panels{display:flex;flex-direction:column}
+.panel{min-height:80vh;display:flex;flex-direction:column;justify-content:center;padding:60px 0;border-bottom:1px solid rgba(58,42,38,.08)}
+.panel:last-child{border-bottom:none}
+.panel-num{font-family:'Inter';font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.panel-num::after{content:"";flex:1;height:1px;background:rgba(58,42,38,.14)}
+.panel h3{font-family:'Cormorant Garamond';font-size:clamp(34px,3.8vw,52px);font-weight:500;letter-spacing:-.022em;color:var(--ink);line-height:1.04;margin-bottom:20px;font-style:italic}
+.panel h3 em{font-family:'Italianno',cursive;font-style:normal;color:var(--gold);font-weight:400;font-size:1.2em;line-height:.6;display:inline-block;vertical-align:baseline}
+.panel p{font-size:17px;color:var(--ink-soft);line-height:1.78;max-width:480px;margin-bottom:18px}
+.panel ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.panel li{font-size:15px;color:var(--ink);padding-left:24px;position:relative;line-height:1.55}
+.panel li::before{content:"·";position:absolute;left:6px;top:-2px;font-size:24px;color:var(--gold);font-weight:600;line-height:1}
+.showcase-sticky{position:sticky;top:120px;height:78vh;display:flex;align-items:center;justify-content:center}
+.showcase-images{position:relative;width:100%;height:100%;border-radius:280px 280px 24px 24px;overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid rgba(58,42,38,.08)}
+.showcase-images > div{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .7s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;padding:50px 42px}
+.showcase-images > div.active{opacity:1}
+.img-content{text-align:center;position:relative;z-index:1}
+.img-mark{font-family:'Italianno',cursive;font-size:170px;line-height:.7;letter-spacing:-.04em;margin-bottom:30px;opacity:.85}
+.img-label{font-family:'Inter';font-size:11px;letter-spacing:.32em;text-transform:uppercase;font-weight:600;margin-bottom:16px;opacity:.85}
+.img-title{font-family:'Cormorant Garamond';font-size:34px;font-weight:500;font-style:italic;line-height:1.1;letter-spacing:-.018em;max-width:300px}
+.img-p0{background:linear-gradient(165deg,var(--rose-mist) 0%,var(--rose) 50%,var(--rose-deep) 100%);color:var(--ink)}
+.img-p1{background:linear-gradient(165deg,var(--cream-warm) 0%,var(--gold) 60%,var(--gold-deep) 100%);color:var(--ink)}
+.img-p2{background:linear-gradient(165deg,var(--rose-mist) 0%,var(--cream-warm) 50%,var(--beige) 100%);color:var(--ink)}
+.img-p3{background:linear-gradient(165deg,var(--ink) 0%,var(--ink-soft) 50%,var(--gold-deep) 100%);color:var(--cream)}
+.showcase-images > div::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.3) 0%,transparent 55%),radial-gradient(circle at 75% 80%,rgba(0,0,0,.12) 0%,transparent 55%)}
+@media (max-width:980px){
+  .showcase-grid{grid-template-columns:1fr;gap:0}
+  .showcase-sticky{display:none}
+  .panel{min-height:auto;padding:40px 0;display:block}
+  .panel::before{content:"";display:block;aspect-ratio:5/6;width:100%;border-radius:200px 200px 18px 18px;margin-bottom:32px;background-size:cover;background-position:center}
+  .panel[data-img="0"]::before{background:linear-gradient(165deg,var(--rose-mist) 0%,var(--rose) 50%,var(--rose-deep) 100%)}
+  .panel[data-img="1"]::before{background:linear-gradient(165deg,var(--cream-warm) 0%,var(--gold) 60%,var(--gold-deep) 100%)}
+  .panel[data-img="2"]::before{background:linear-gradient(165deg,var(--rose-mist) 0%,var(--cream-warm) 50%,var(--beige) 100%)}
+  .panel[data-img="3"]::before{background:linear-gradient(165deg,var(--ink) 0%,var(--ink-soft) 50%,var(--gold-deep) 100%)}
+}
+</style>
+
+<section class="showcase" id="ritual-scroll">
+  <div class="container">
+    <div class="showcase-head">
+      <span class="eyebrow">Cuatro rituales</span>
+      <h2>El recorrido completo, <em>uno a la vez</em>.</h2>
+      <p>Cada servicio diseñado como un capítulo. Scrollea para conocer en detalle cómo cuidamos cada parte de tu día de spa.</p>
+    </div>
+
+    <div class="showcase-grid">
+      <div class="showcase-panels">
+
+        <div class="panel" data-img="0">
+          <div class="panel-num">01 · Cabello</div>
+          <h3>Color &amp; corte con <em>lectura previa</em>.</h3>
+          <p>No empezamos a cortar ni a colorear hasta entender tu rostro, tu textura natural y tu rutina diaria. El mejor resultado es el que puedes mantener sin esfuerzo todos los días.</p>
+          <ul>
+            <li>Diagnóstico capilar inicial</li>
+            <li>Color personalizado a tu tono de piel</li>
+            <li>Balayage · mechas · color global</li>
+            <li>Cortes que enmarcan tu cara</li>
+            <li>Tratamientos reparadores incluidos</li>
+          </ul>
+        </div>
+
+        <div class="panel" data-img="1">
+          <div class="panel-num">02 · Cejas</div>
+          <h3>Microblading que <em>respeta tu mirada</em>.</h3>
+          <p>Pigmentación pelo a pelo para densificar y rediseñar — sin cambiar lo esencial de tu rostro. Estudio cuidadoso de simetría antes de tocar la piel, y retoque a las 6 semanas incluido.</p>
+          <ul>
+            <li>Diseño previo a la sesión sin compromiso</li>
+            <li>Pigmento dermatológico certificado</li>
+            <li>Trazo pelo a pelo natural</li>
+            <li>Sesión de retoque a 6 semanas</li>
+            <li>Mantenimiento anual recomendado</li>
+          </ul>
+        </div>
+
+        <div class="panel" data-img="2">
+          <div class="panel-num">03 · Manos &amp; pies</div>
+          <h3>Manicure y pedicure <em>spa</em>.</h3>
+          <p>El cuidado completo: exfoliación, mascarilla, masaje y esmaltado de tu elección. Productos de alta gama, esterilización impecable entre cada clienta, sin prisa.</p>
+          <ul>
+            <li>Manicure spa con exfoliación</li>
+            <li>Pedicure con tratamiento completo</li>
+            <li>Esmaltado tradicional o en gel</li>
+            <li>Nail art a la medida</li>
+            <li>Esterilización entre clientes</li>
+          </ul>
+        </div>
+
+        <div class="panel" data-img="3">
+          <div class="panel-num">04 · Maquillaje &amp; spa facial</div>
+          <h3>Para el día que <em>importa</em>.</h3>
+          <p>Maquillaje profesional para eventos, novias y sesiones de foto — y nuestra área dedicada de spa facial con equipo y protocolos certificados. Cuidado que resiste y se ve natural en cámara y en persona.</p>
+          <ul>
+            <li>Maquillaje social, evento, novia</li>
+            <li>Prueba previa de novia incluida</li>
+            <li>Maquillaje editorial / foto</li>
+            <li>Faciales personalizados spa</li>
+            <li>Limpieza profunda &amp; antiedad</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="showcase-sticky">
+        <div class="showcase-images">
+          <div class="img-p0 active">
+            <div class="img-content">
+              <div class="img-mark">C</div>
+              <div class="img-label">01 · Cabello</div>
+              <div class="img-title">Color · corte · tratamiento</div>
+            </div>
+          </div>
+          <div class="img-p1">
+            <div class="img-content">
+              <div class="img-mark">M</div>
+              <div class="img-label">02 · Cejas</div>
+              <div class="img-title">Microblading natural</div>
+            </div>
+          </div>
+          <div class="img-p2">
+            <div class="img-content">
+              <div class="img-mark">M</div>
+              <div class="img-label">03 · Manos &amp; pies</div>
+              <div class="img-title">Manicure &amp; pedicure spa</div>
+            </div>
+          </div>
+          <div class="img-p3">
+            <div class="img-content">
+              <div class="img-mark">B</div>
+              <div class="img-label">04 · Maquillaje &amp; Spa</div>
+              <div class="img-title">El día que importa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const panels = document.querySelectorAll('#ritual-scroll .panel[data-img]');
+  const images = document.querySelectorAll('#ritual-scroll .showcase-images > div');
+  if(!panels.length || !images.length) return;
+  const setActive = (idx) => images.forEach((img, i) => img.classList.toggle('active', i === idx));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
+        setActive(parseInt(entry.target.dataset.img, 10));
+      }
+    });
+  }, { threshold: [0.4, 0.5, 0.6], rootMargin: "-20% 0px -20% 0px" });
+  panels.forEach(p => observer.observe(p));
+})();
+</script>
+
 <section class="section servicios" id="servicios">
   <div class="container">
     <div class="section-head">
