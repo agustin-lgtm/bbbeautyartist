@@ -398,7 +398,7 @@ footer a:hover{color:var(--gold-soft)}
 .showcase-head h2{font-family:'Cormorant Garamond';font-weight:400;font-size:clamp(38px,4.8vw,62px);line-height:1.04;letter-spacing:-.022em;margin:16px 0 22px;color:var(--ink)}
 .showcase-head h2 em{font-style:italic;color:var(--gold);font-weight:500}
 .showcase-head p{font-size:17.5px;color:var(--ink-soft);max-width:600px;line-height:1.75;margin:0 auto}
-.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start}
+.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 .showcase-panels{display:flex;flex-direction:column}
 .panel{min-height:80vh;display:flex;flex-direction:column;justify-content:center;padding:60px 0;border-bottom:1px solid rgba(58,42,38,.08)}
 .panel:last-child{border-bottom:none}
@@ -538,18 +538,47 @@ footer a:hover{color:var(--gold-soft)}
 
 <script>
 (function(){
-  const panels = document.querySelectorAll('#ritual-scroll .panel[data-img]');
-  const images = document.querySelectorAll('#ritual-scroll .showcase-images > div');
+  const panels = Array.from(document.querySelectorAll('#ritual-scroll .panel[data-img]'));
+  const images = Array.from(document.querySelectorAll('#ritual-scroll .showcase-images > div'));
   if(!panels.length || !images.length) return;
-  const setActive = (idx) => images.forEach((img, i) => img.classList.toggle('active', i === idx));
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
-        setActive(parseInt(entry.target.dataset.img, 10));
+
+  let currentIdx = 0;
+  const setActive = (idx) => {
+    if (idx === currentIdx) return;
+    currentIdx = idx;
+    images.forEach((img, i) => img.classList.toggle('active', i === idx));
+  };
+
+  // Detección por scroll: encuentra el panel cuyo centro está más cerca del centro del viewport
+  const updateActive = () => {
+    const viewportCenter = window.innerHeight / 2;
+    let bestIdx = 0;
+    let bestDistance = Infinity;
+    panels.forEach((panel, i) => {
+      const rect = panel.getBoundingClientRect();
+      const panelCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(panelCenter - viewportCenter);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestIdx = parseInt(panel.dataset.img, 10);
       }
     });
-  }, { threshold: [0.4, 0.5, 0.6], rootMargin: "-20% 0px -20% 0px" });
-  panels.forEach(p => observer.observe(p));
+    setActive(bestIdx);
+  };
+
+  // Throttle con requestAnimationFrame
+  let rafId = null;
+  const onScroll = () => {
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      updateActive();
+      rafId = null;
+    });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  updateActive(); // Initial state
 })();
 </script>
 
